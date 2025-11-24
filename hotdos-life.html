@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOTDOS LIFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Навигационная панель */
+        .nav-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 60px;
+        }
+        
+        .left-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .shawarma-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .shawarma-img {
+            width: 280px;
+            height: 280px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border: 3px solid #8b4513;
+            transform: rotate(-3deg);
+        }
+        
+        .crypto-coins {
+            position: absolute;
+            top: -20px;
+            right: -80px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .coin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .bitcoin {
+            width: 60px;
+            height: 60px;
+            background: #f7931a;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .ethereum {
+            width: 55px;
+            height: 55px;
+            background: #627eea;
+            color: white;
+            font-size: 1.6rem;
+        }
+        
+        .ton {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0088cc, #00aaff);
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .trx {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff0000, #ff6b6b);
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .gpu-icon {
+            width: 60px;
+            height: 45px;
+            background: linear-gradient(135deg, #2a2a2a, #4a4a4a);
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+            border: 2px solid #00ff88;
+            overflow: hidden;
+        }
+        
+        .gpu-fan {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #00ff88;
+            border-radius: 50%;
+            top: 8px;
+        }
+        
+        .gpu-fan::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #00ff88;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+        
+        .gpu-fan.left {
+            left: 10px;
+        }
+        
+        .gpu-fan.right {
+            right: 10px;
+        }
+        
+        .gpu-connector {
+            position: absolute;
+            bottom: 5px;
+            width: 40px;
+            height: 8px;
+            background: linear-gradient(135deg, #ffd700, #ff6b00);
+            border-radius: 2px;
+        }
+        
+        .gpu-text {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.5rem;
+            color: #00ff88;
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-15px) rotate(5deg); 
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bitcoin { animation-delay: 0s; }
+        .ethereum { animation-delay: 0.5s; }
+        .ton { animation-delay: 1s; }
+        .trx { animation-delay: 1.5s; }
+        .gpu-icon { animation-delay: 2s; }
+        
+        .right-section {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        .description {
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 50px;
+            color: #ccc;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .social-platforms {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .platform {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 140px;
+        }
+        
+        .platform:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+        
+        .platform-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .platform-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .platform a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .fa-tiktok { color: #000000; }
+        .fa-youtube { color: #FF0000; }
+        .fa-telegram { color: #0088CC; }
+        .fa-heart { color: #ff4d6d; }
+        
+        /* Анимации появления */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Стили для страницы Hotdos PC */
+        .pc-page {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .pc-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        .price-list {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .price-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .price-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .price-text {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            color: #fff;
+        }
+        
+        .price-highlight {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        
+        /* Стили для страницы Код/Сайт */
+        .code-page {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .code-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #0088cc, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        .code-description {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .code-price-list {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Стили для страницы Связь */
+        .contact-page {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .contact-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        
+        .contact-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        .contact-email {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        
+        .contact-telegram {
+            color: #0088cc;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                gap: 40px;
+            }
+            
+            .title {
+                font-size: 3.5rem;
+            }
+            
+            .shawarma-img {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .crypto-coins {
+                right: -60px;
+            }
+            
+            .pc-title, .code-title, .contact-title {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 50px;
+                text-align: center;
+                margin-top: 80px;
+            }
+            
+            .nav-panel {
+                top: 15px;
+                right: 15px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            
+            .nav-button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .title {
+                font-size: 3rem;
+                letter-spacing: 3px;
+            }
+            
+            .description {
+                font-size: 1.2rem;
+                margin-bottom: 40px;
+            }
+            
+            .shawarma-img {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .crypto-coins {
+                position: relative;
+                top: 0;
+                right: 0;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 20px;
+                gap: 20px;
+            }
+            
+            .social-platforms {
+                gap: 20px;
+            }
+            
+            .platform {
+                padding: 18px 25px;
+                min-width: 130px;
+            }
+            
+            .pc-title, .code-title, .contact-title {
+                font-size: 2.8rem;
+            }
+            
+            .price-list, .code-price-list, .contact-info {
+                padding: 30px 20px;
+            }
+            
+            .price-text, .contact-text {
+                font-size: 1.1rem;
+            }
+            
+            .code-description {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .description {
+                font-size: 1.1rem;
+            }
+            
+            .shawarma-img {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .crypto-coins {
+                gap: 15px;
+            }
+            
+            .bitcoin, .ethereum {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+            
+            .ton, .trx {
+                width: 45px;
+                height: 45px;
+                font-size: 0.8rem;
+            }
+            
+            .gpu-icon {
+                width: 50px;
+                height: 38px;
+            }
+            
+            .gpu-fan {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .gpu-connector {
+                width: 35px;
+                height: 6px;
+            }
+            
+            .gpu-text {
+                font-size: 0.4rem;
+            }
+            
+            .social-platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform {
+                width: 200px;
+            }
+            
+            .nav-panel {
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .pc-title, .code-title, .contact-title {
+                font-size: 2.2rem;
+            }
+            
+            .price-text, .contact-text {
+                font-size: 1rem;
+            }
+            
+            .code-description {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <div class="nav-panel">
+        <a href="#" class="nav-button fade-in" onclick="showMainPage()">Головна</a>
+        <a href="#" class="nav-button fade-in" onclick="showPCPage()">Hotdos PC</a>
+        <a href="#" class="nav-button fade-in" onclick="showCodePage()">Код/Сайт</a>
+        <a href="#" class="nav-button fade-in" onclick="showContactPage()">Связь</a>
+    </div>
+
+    <!-- Главная страница -->
+    <div class="container" id="mainPage">
+        <div class="left-section">
+            <div class="shawarma-container">
+                <img src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/7fdf749e52a6cac1f79117bcb87b64ea~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14635&refresh_token=1a2eac6e&x-expires=1764090000&x-signature=xh1cCIupzcWdISQSx%2FuTdKEtGpA%3D&t=4d5b0474&ps=82dc5187&shp=a5d48078&shcp=81f88b70&idc=maliva" 
+                     alt="Шаурма" 
+                     class="shawarma-img fade-in">
+                <div class="crypto-coins">
+                    <div class="coin bitcoin fade-in">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <div class="coin ethereum fade-in">
+                        <i class="fab fa-ethereum"></i>
+                    </div>
+                    <div class="coin ton fade-in">TON</div>
+                    <div class="coin trx fade-in">TRX</div>
+                    <div class="gpu-icon fade-in">
+                        <div class="gpu-fan left"></div>
+                        <div class="gpu-fan right"></div>
+                        <div class="gpu-connector"></div>
+                        <div class="gpu-text">RTX</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <h1 class="title fade-in">Hotdos Life</h1>
+            <p class="description fade-in">Я Рома мені 14 крипта-орбітраж, зборка пк на заказ, тайський бокс, начинающий ютубер, дотер, ксеер</p>
+            
+            <div class="social-platforms">
+                <div class="platform fade-in">
+                    <a href="https://tiktok.com/@hotdos" target="_blank">
+                        <i class="fab fa-tiktok platform-icon"></i>
+                        <span class="platform-name">TikTok</span>
+                    </a>
+                </div>
+                
+                <div class="platform fade-in">
+                    <a href="https://www.youtube.com/@Hotdos_life" target="_blank">
+                        <i class="fab fa-youtube platform-icon"></i>
+                        <span class="platform-name">YouTube</span>
+                    </a>
+                </div>
+                
+                <div class="platform fade-in">
+                    <a href="https://t.me/taxistik2" target="_blank">
+                        <i class="fab fa-telegram platform-icon"></i>
+                        <span class="platform-name">Telegram</span>
+                    </a>
+                </div>
+
+                <div class="platform fade-in">
+                    <a href="https://donatello.to/hotdoslife" target="_blank">
+                        <i class="fas fa-heart platform-icon"></i>
+                        <span class="platform-name">Донат</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Страница Hotdos PC -->
+    <div class="pc-page" id="pcPage">
+        <h1 class="pc-title fade-in">HOTDOS PC</h1>
+        <div class="price-list fade-in">
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">150 грн</span> - установка/переустановка виндовс 10,11 home/pro активация</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">50 грн</span> - установка ігор любих</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">20 грн</span> - диагностика пк</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">від 400 грн</span> (в залежності від складності поломки) - ремонт пк</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">650 грн</span> - підбор комплектуючих і збірка</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Страница Код/Сайт -->
+    <div class="code-page" id="codePage">
+        <h1 class="code-title fade-in">роблю сайти и коди на заказ</h1>
+        <div class="code-price-list fade-in">
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">120 грн</span> - создания сайта под любу тематику</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">180 грн</span> - создания сайта под любу тематику з откритим доступом и айпи</p>
+            </div>
+            <div class="price-item">
+                <p class="price-text"><span class="price-highlight">від 100 грн</span> - різні задачі можу робить фотошоп, монтаж, аватарка, код любой, презентація</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Страница Связь -->
+    <div class="contact-page" id="contactPage">
+        <h1 class="contact-title fade-in">СВЯЗЬ</h1>
+        <div class="contact-info fade-in">
+            <p class="contact-text">
+                щоб заказать якусь послугу писать на почту електрону: 
+                <span class="contact-email">gorovoyroma2010@gmail.com</span> 
+                або на телеграм 
+                <span class="contact-telegram">@hotdos20</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Функции для переключения страниц
+        function showMainPage() {
+            document.getElementById('mainPage').style.display = 'flex';
+            document.getElementById('pcPage').style.display = 'none';
+            document.getElementById('codePage').style.display = 'none';
+            document.getElementById('contactPage').style.display = 'none';
+        }
+        
+        function showPCPage() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('pcPage').style.display = 'block';
+            document.getElementById('codePage').style.display = 'none';
+            document.getElementById('contactPage').style.display = 'none';
+            
+            // Анимация появления элементов на странице PC
+            const fadeElements = document.querySelectorAll('#pcPage .fade-in');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 200 * index);
+            });
+        }
+        
+        function showCodePage() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('pcPage').style.display = 'none';
+            document.getElementById('codePage').style.display = 'block';
+            document.getElementById('contactPage').style.display = 'none';
+            
+            // Анимация появления элементов на странице Код/Сайт
+            const fadeElements = document.querySelectorAll('#codePage .fade-in');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 200 * index);
+            });
+        }
+        
+        function showContactPage() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('pcPage').style.display = 'none';
+            document.getElementById('codePage').style.display = 'none';
+            document.getElementById('contactPage').style.display = 'block';
+            
+            // Анимация появления элементов на странице Связь
+            const fadeElements = document.querySelectorAll('#contactPage .fade-in');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 200 * index);
+            });
+        }
+        
+        // Анимация появления элементов при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 200 * index);
+            });
+            
+            // Дополнительная анимация для монет и GPU
+            const animatedItems = document.querySelectorAll('.coin, .gpu-icon');
+            animatedItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.transform = 'scale(1) rotate(0deg)';
+                }, 800 + (index * 200));
+            });
+        });
+        
+        // Добавляем интерактивность при наведении на монеты и GPU
+        const animatedItems = document.querySelectorAll('.coin, .gpu-icon');
+        animatedItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotate(10deg)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>
